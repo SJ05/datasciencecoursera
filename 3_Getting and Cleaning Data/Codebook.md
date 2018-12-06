@@ -14,7 +14,7 @@ For each record in the dataset it is provided:
 - Its activity label. 
 - An identifier of the subject who carried out the experiment.
 
-### Please see [README.md](https://github.com/SJ05/datasciencecoursera/blob/master/3_Getting%20and%20Cleaning%20Data/README.md) about how the following are being done for this project
+### Please see [README.md](https://github.com/SJ05/datasciencecoursera/blob/master/3_Getting%20and%20Cleaning%20Data/README.md) regarding some information about the project. Below is a simple explanation about the code that has been created:
 1. Merges the training and the test sets to create one data set.
 1.1 Read the data
 ```r
