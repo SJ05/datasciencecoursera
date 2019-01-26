@@ -1,4 +1,3 @@
-
 # Libraries needed for the functions to run
 library(ggplot2)
 library(RColorBrewer)
@@ -27,5 +26,3 @@ if(!file.exists("airpollution")) {
   # Close the file service
   dev.off()
 }
-
-
