@@ -17,12 +17,24 @@ if(!file.exists("airpollution")) {
   NEI <- readRDS("./airpollution/summarySCC_PM25.rds")
   SCC <- readRDS("./airpollution/Source_Classification_Code.rds")
   
-  totals <- aggregate(Emissions ~ year,NEI, sum)
+  # Read the data about motor vehicles emmission
+  vehiclesBaltimoreNEI <- vehiclesNEI[vehiclesNEI$fips == 24510,]
+  vehiclesBaltimoreNEI$city <- "Baltimore City"
+  vehiclesLANEI <- vehiclesNEI[vehiclesNEI$fips=="06037",]
+  vehiclesLANEI$city <- "Los Angeles"
+  bothNEI <- rbind(vehiclesBaltimoreNEI,vehiclesLANEI)
   
   # Initialize the graphic file device to be used
-  png("plot1.png", width=480, height=480)
+  png("plot6.png", width=480, height=480)
   
-  barplot(totals$Emissions, xlab="Year", ylab="PM2.5 Emissions (Tons)", main = "PM2.5 Emission Totals From All US Sources", names.arg = totals$year)
+  ggp <- ggplot(bothNEI, aes(x=factor(year), y=Emissions, fill=city)) +
+    geom_bar(aes(fill=year),stat="identity") +
+    facet_grid(scales="free", space="free", .~city) +
+    guides(fill=FALSE) + theme_bw() +
+    labs(x="year", y=expression("PM"[2.5]*" Emission (Kilo-Tons)")) + 
+    labs(title=expression("PM"[2.5]*" Motor Vehicle Source Emissions, Baltimore & LA (1999-2008)"))
+  
+  print(ggp)
   
   # Close the file service
   dev.off()

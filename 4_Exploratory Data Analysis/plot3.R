@@ -17,12 +17,18 @@ if(!file.exists("airpollution")) {
   NEI <- readRDS("./airpollution/summarySCC_PM25.rds")
   SCC <- readRDS("./airpollution/Source_Classification_Code.rds")
   
-  totals <- aggregate(Emissions ~ year,NEI, sum)
+  baltimoreNEI <- NEI[NEI$fips=="24510",]
   
   # Initialize the graphic file device to be used
-  png("plot1.png", width=480, height=480)
+  png("plot3.png", width=550, height=480)
   
-  barplot(totals$Emissions, xlab="Year", ylab="PM2.5 Emissions (Tons)", main = "PM2.5 Emission Totals From All US Sources", names.arg = totals$year)
+  ggp <- ggplot(baltimoreNEI,aes(factor(year),Emissions,fill=type)) +
+    geom_bar(stat="identity") +
+    facet_grid(.~type,scales = "free",space="free") + 
+    labs(x="year", y=expression("Total PM"[2.5]*" Emission (Tons)")) + 
+    labs(title=expression("PM"[2.5]*" Emissions by Source Type, Baltimore City (1999-2008)"))
+  
+  print(ggp)
   
   # Close the file service
   dev.off()
